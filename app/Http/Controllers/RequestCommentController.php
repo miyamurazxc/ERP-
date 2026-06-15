@@ -59,7 +59,7 @@ class RequestCommentController extends Controller
         // Создаем комментарий через связь заявки.
         $documentRequest->comments()->create([
             // Автор комментария.
-            'user_id' => $request->user()->id,
+            'user_id' => $request->user()->id, 
             // Если это ответ, сохраняем ID родительского комментария.
             'parent_id' => $parent->id ?? null,
             // Текст комментария.
