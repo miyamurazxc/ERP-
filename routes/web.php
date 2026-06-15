@@ -59,6 +59,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/users', [AdminUserController::class, 'store'])->name('admin.users.store');
     // Обновление роли и разрешений пользователя.
     Route::patch('/admin/users/{user}', [AdminUserController::class, 'update'])->name('admin.users.update');
+    Route::delete('/admin/users/{user}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
     // Одобрение нового пользователя после самостоятельной регистрации.
     Route::patch('/admin/users/{user}/approve', [AdminUserController::class, 'approve'])->name('admin.users.approve');
     // Отклонение нового пользователя после самостоятельной регистрации.

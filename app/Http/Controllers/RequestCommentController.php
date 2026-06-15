@@ -41,6 +41,21 @@ class RequestCommentController extends Controller
                 ->findOrFail($data['parent_id']);
         }
 
+        // В одной заявке каждая роль может оставить только одно сообщение.
+        // Так работник, кадровик, директор и админ не смогут случайно заспамить карточку.
+        $alreadyCommentedByRole = RequestComment::where('document_request_id', $documentRequest->id)
+            ->whereHas('user', function ($query) use ($request) {
+                $query->where('role', $request->user()->role);
+            })
+            ->exists();
+
+        // Если сообщение от этой роли уже есть, возвращаем пользователя назад с ошибкой.
+        if ($alreadyCommentedByRole) {
+            return back()->withErrors([
+                'body' => 'В этой заявке ваша роль уже оставила сообщение.',
+            ]);
+        }
+
         // Создаем комментарий через связь заявки.
         $documentRequest->comments()->create([
             // Автор комментария.

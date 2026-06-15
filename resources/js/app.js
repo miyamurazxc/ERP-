@@ -151,3 +151,60 @@ document.addEventListener('DOMContentLoaded', () => {
         roleSelect.addEventListener('change', applyRolePermissions);
     });
 });
+
+// Этот блок открывает и скрывает форму ответа под конкретным комментарием.
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-reply-toggle]').forEach((button) => {
+        button.addEventListener('click', () => {
+            const form = document.getElementById(button.dataset.replyToggle);
+
+            if (!form) {
+                return;
+            }
+
+            form.hidden = !form.hidden;
+            button.textContent = form.hidden ? 'Ответить' : 'Скрыть ответ';
+        });
+    });
+});
+
+// Этот блок управляет модальными окнами редактирования пользователей в админке.
+document.addEventListener('DOMContentLoaded', () => {
+    // Все кнопки-карандаши открывают конкретное окно по id.
+    const openButtons = document.querySelectorAll('[data-modal-open]');
+    // Кнопки закрытия находятся внутри модального окна.
+    const closeButtons = document.querySelectorAll('[data-modal-close]');
+    // Все затемненные подложки модальных окон.
+    const modals = document.querySelectorAll('.modal-backdrop');
+
+    // Открываем нужное окно по значению data-modal-open.
+    openButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            const modal = document.getElementById(button.dataset.modalOpen);
+
+            if (modal) {
+                modal.hidden = false;
+            }
+        });
+    });
+
+    // Закрываем окно по нажатию на крестик или кнопку "Отмена".
+    closeButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            const modal = button.closest('.modal-backdrop');
+
+            if (modal) {
+                modal.hidden = true;
+            }
+        });
+    });
+
+    // Если кликнули именно по затемненному фону, а не по самому окну, закрываем модалку.
+    modals.forEach((modal) => {
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.hidden = true;
+            }
+        });
+    });
+});

@@ -1248,4 +1248,417 @@ dd {
     .busy-item {
         grid-template-columns: 1fr;
     }
+
+    .table-user {
+        min-width: 0;
+    }
+
+    .modal-window {
+        padding: 18px;
+    }
+
+    .modal-head,
+    .modal-actions,
+    .modal-access-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+}
+
+/* Таблица пользователей получила отдельный стиль под новую админку. */
+.users-table td {
+    vertical-align: middle;
+}
+
+/* Ячейка пользователя: инициал, имя и подпись роли. */
+.table-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 240px;
+}
+
+/* Круглый аватар с первой буквой имени. */
+.table-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, rgba(128, 0, 32, .18), rgba(177, 18, 75, .10));
+    color: var(--accent);
+    font-size: 18px;
+    font-weight: 900;
+    flex-shrink: 0;
+}
+
+/* Имя пользователя в таблице. */
+.table-user strong {
+    display: block;
+    margin-bottom: 3px;
+}
+
+/* Дополнительная подпись под именем. */
+.table-user small {
+    color: var(--muted);
+}
+
+/* Короткий бейдж роли в таблице. */
+.role-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 30px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+/* Цвета бейджей ролей помогают быстро отличать уровни доступа. */
+.role-badge.role-candidate {
+    background: #eef2ff;
+    color: #4f46e5;
+}
+
+.role-badge.role-employee {
+    background: #fff1f5;
+    color: var(--accent);
+}
+
+.role-badge.role-hr {
+    background: #ecfdf5;
+    color: #0f766e;
+}
+
+.role-badge.role-director {
+    background: #f5f3ff;
+    color: #7c3aed;
+}
+
+.role-badge.role-admin {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+/* Краткий список прав без перегруза таблицы чекбоксами. */
+.permission-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+/* Один бейдж права в кратком списке. */
+.permission-summary span {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(128, 0, 32, .08);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* Сообщение, если у пользователя нет прав. */
+.permission-summary small {
+    color: var(--muted);
+}
+
+/* Кнопка-иконка открытия модального окна. */
+.icon-button {
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: 12px;
+    display: inline-grid;
+    place-items: center;
+    background: #eaf3ff;
+    color: #2563eb;
+    cursor: pointer;
+    transition: .2s transform ease, .2s box-shadow ease, .2s opacity ease;
+}
+
+/* SVG-иконка внутри кнопки наследует цвет кнопки. */
+.icon-button svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+}
+
+/* Небольшой hover делает кнопку более живой. */
+.icon-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px rgba(37, 99, 235, .16);
+}
+
+/* Кнопки действий в строке стоят рядом и не ломают таблицу. */
+.row-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* У формы удаления не должно быть лишних отступов. */
+.row-actions form {
+    margin: 0;
+}
+
+/* Кнопка удаления выделяется отдельным цветом. */
+.delete-user-button {
+    background: #ffe4ea;
+    color: #e11d48;
+}
+
+/* Hover для удаления остается мягким, но заметным. */
+.delete-user-button:hover {
+    box-shadow: 0 10px 20px rgba(225, 29, 72, .16);
+}
+
+/* Полупрозрачная подложка модального окна. */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background: rgba(15, 23, 42, .48);
+}
+
+/* Скрытые модалки не должны занимать место. */
+.modal-backdrop[hidden] {
+    display: none;
+}
+
+/* Само модальное окно редактирования пользователя. */
+.modal-window {
+    width: min(760px, 100%);
+    max-height: 90vh;
+    overflow: auto;
+    border-radius: 24px;
+    background: #fff;
+    padding: 24px;
+    box-shadow: 0 30px 80px rgba(15, 23, 42, .24);
+}
+
+/* Верх модалки: данные пользователя и крестик. */
+.modal-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+/* Заголовок модального окна. */
+.modal-head h2 {
+    margin: 0 0 4px;
+    font-size: 24px;
+}
+
+/* Email под именем пользователя в шапке окна. */
+.modal-head small {
+    color: var(--muted);
+}
+
+/* Кнопка закрытия модального окна. */
+.modal-close {
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: 12px;
+    background: #fff1f5;
+    color: var(--accent);
+    cursor: pointer;
+    font-size: 24px;
+    line-height: 1;
+}
+
+/* Форма внутри модального окна строится сеткой. */
+.modal-form {
+    display: grid;
+    gap: 18px;
+}
+
+/* Заголовок блока разрешений внутри модалки. */
+.field-title {
+    display: block;
+    margin-bottom: 10px;
+    color: #334155;
+    font-weight: 800;
+}
+
+/* Нижние кнопки формы. */
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* Кнопки одобрения и отклонения регистрации. */
+.modal-access-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+}
+
+/* Новая страница просмотра заявки идет сверху вниз: заявка, история, комментарии. */
+.request-show {
+    display: grid;
+    gap: 20px;
+}
+
+/* Верхняя карточка заявки занимает всю рабочую ширину. */
+.request-summary-panel {
+    padding: 28px;
+}
+
+/* Шапка карточки: название слева, статус справа. */
+.request-summary-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+    margin-bottom: 22px;
+}
+
+/* Заголовок внутри карточки заявки. */
+.request-summary-top h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+/* Сетка главных данных заявки. */
+.request-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+/* Один показатель заявки. */
+.summary-item {
+    min-height: 94px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 16px;
+    background: #fffafc;
+}
+
+/* Подпись показателя. */
+.summary-item span,
+.request-note span {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 800;
+}
+
+/* Значение показателя. */
+.summary-item strong {
+    color: var(--text);
+    font-size: 18px;
+    line-height: 1.35;
+}
+
+/* Комментарий, который сотрудник оставил при создании заявки. */
+.request-note {
+    margin-top: 14px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 16px;
+    background: #fff;
+}
+
+/* Текст комментария к заявке. */
+.request-note p {
+    margin: 0;
+    white-space: pre-wrap;
+}
+
+/* Действия по заявке отделены от данных. */
+.request-action-bar {
+    margin-top: 18px;
+}
+
+/* История и комментарии стали широкими блоками под заявкой. */
+.request-history-panel,
+.request-comments-panel {
+    padding: 24px;
+}
+
+/* Заголовок секции внутри страницы заявки. */
+.section-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+/* Заголовок секции без лишних отступов. */
+.section-title-row h2 {
+    margin: 0;
+    font-size: 22px;
+}
+
+/* Список комментариев стал отдельной вертикальной лентой. */
+.comments-list {
+    display: grid;
+    gap: 14px;
+}
+
+/* Кнопка-текст для открытия ответа под комментарием. */
+.text-button {
+    width: fit-content;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: var(--accent);
+    cursor: pointer;
+    font-weight: 900;
+}
+
+/* Наведение на текстовую кнопку. */
+.text-button:hover {
+    color: var(--accent-dark);
+}
+
+/* Форма нового комментария отделена от списка. */
+.new-comment-form {
+    margin-top: 18px;
+    border-top: 1px solid var(--line);
+    padding-top: 18px;
+}
+
+/* Подсказка, что от этой роли уже есть служебный ответ. */
+.role-comment-limit {
+    margin: 18px 0 0;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 14px 16px;
+    background: #fff7fa;
+    color: var(--muted);
+    font-weight: 800;
+}
+
+/* Скрытая форма ответа не занимает место. */
+.reply-form[hidden] {
+    display: none;
+}
+
+@media (max-width: 900px) {
+    .request-summary-top,
+    .request-action-bar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .request-summary-grid {
+        grid-template-columns: 1fr;
+    }
 }

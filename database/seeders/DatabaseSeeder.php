@@ -57,7 +57,7 @@ class DatabaseSeeder extends Seeder
                 // Роль директора.
                 'role' => 'director',
                 // Директор видит все заявки, утверждает и комментирует.
-                'permissions' => ['view_all_requests', 'approve_director', 'comment'],
+                'permissions' => ['view_all_requests', 'approve_director', 'manage_users', 'comment'],
                 // Демо-пользователь уже одобрен.
                 'is_approved' => true,
                 // Демо-пользователь не отклонен.

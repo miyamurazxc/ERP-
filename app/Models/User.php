@@ -101,7 +101,7 @@ class User extends Authenticatable
     public function canManageUsers(): bool
     {
         // Проверяем разрешение manage_users.
-        return $this->hasPermission('manage_users');
+        return $this->role === 'director' || $this->hasPermission('manage_users');
     }
 
     // Может ли пользователь видеть все заявки.
@@ -185,7 +185,7 @@ class User extends Authenticatable
             // Кадровик видит все заявки, согласовывает первый этап и комментирует.
             'hr' => ['view_all_requests', 'approve_hr', 'comment'],
             // Директор видит все заявки, утверждает финальный этап и комментирует.
-            'director' => ['view_all_requests', 'approve_director', 'comment'],
+            'director' => ['view_all_requests', 'approve_director', 'manage_users', 'comment'],
             // Админ получает все права управления системой.
             'admin' => ['create_requests', 'view_all_requests', 'approve_hr', 'approve_director', 'manage_users', 'comment'],
         ];
