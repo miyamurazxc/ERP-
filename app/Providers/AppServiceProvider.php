@@ -1,24 +1,27 @@
 <?php
 
+// Пространство имен провайдеров Laravel.
+// Провайдеры нужны для настройки приложения при запуске.
 namespace App\Providers;
 
+// Базовый класс сервис-провайдера Laravel.
 use Illuminate\Support\ServiceProvider;
 
+// AppServiceProvider - главный сервис-провайдер приложения.
+// Он создается Laravel автоматически и обычно используется для общей настройки проекта.
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
+    // Метод register запускается рано, когда Laravel регистрирует сервисы.
+    // Здесь обычно подключают классы, которые должны быть доступны через контейнер Laravel.
     public function register(): void
     {
-        //
+        // В этом проекте отдельные сервисы не регистрируются, поэтому метод пустой.
     }
 
-    /**
-     * Bootstrap any application services.
-     */
+    // Метод boot запускается после регистрации сервисов.
+    // Здесь обычно пишут настройки, которые должны примениться при старте приложения.
     public function boot(): void
     {
-        //
+        // В проекте пока нет глобальных настроек, поэтому метод пустой.
     }
 }
